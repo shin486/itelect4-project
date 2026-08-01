@@ -1,3 +1,4 @@
+// src/components/UserCard.tsx
 import type { User } from "../types/index";
 
 interface UserCardProps {
@@ -19,7 +20,7 @@ function UserCard({ user, onSelect }: UserCardProps) {
   };
 
   return (
-    <div className="user-card" style={{ border: '1px solid #ccc', padding: '1rem', margin: '1rem 0' }}>
+    <div className="user-card" style={{ border: '1px solid #ccc', padding: '1rem', margin: '1rem 0', borderRadius: '8px' }}>
       <h3>{user.name}</h3>
       <p><strong>Email:</strong> {user.email}</p>
       <p><strong>Role:</strong> {user.role}</p>
@@ -29,9 +30,11 @@ function UserCard({ user, onSelect }: UserCardProps) {
         type="text" 
         placeholder="Search..." 
         onChange={handleChange}
-        style={{ marginRight: '0.5rem' }}
+        style={{ marginRight: '0.5rem', padding: '0.3rem' }}
       />
-      <button onClick={handleClick}>Select User</button>
+      <button onClick={handleClick} style={{ padding: '0.3rem 1rem', cursor: 'pointer' }}>
+        Select User
+      </button>
     </div>
   );
 }
