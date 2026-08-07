@@ -29,13 +29,24 @@ const SubmissionBadge: React.FC<SubmissionBadgeProps> = ({
   const status = getStatus(submission.score);
 
   return (
-    <div className="submission-badge" style={{ border: '1px solid #28a745', padding: '1rem', margin: '1rem 0', borderRadius: '8px' }}>
-      <p><strong>Repository:</strong> {submission.repoUrl}</p>
-      <p><strong>Score:</strong> {submission.score ?? "Not graded yet"}</p>
-      <p><strong>Status:</strong> {status}</p>
-      <p><strong>Submitted:</strong> {new Date(submission.submittedAt).toLocaleString()}</p>
+    <div className="m-4 rounded-lg border border-green-200 bg-green-50 p-5 shadow-sm dark:border-green-700 dark:bg-gray-800">
+      <p className="text-gray-600 dark:text-gray-300">
+        <strong>Repository:</strong> {submission.repoUrl}
+      </p>
+      <p className="text-gray-600 dark:text-gray-300">
+        <strong>Score:</strong> {submission.score ?? "Not graded yet"}
+      </p>
+      <p className="text-gray-600 dark:text-gray-300">
+        <strong>Status:</strong> {status}
+      </p>
+      <p className="text-sm text-gray-500 dark:text-gray-400">
+        <strong>Submitted:</strong> {new Date(submission.submittedAt).toLocaleString()}
+      </p>
       {children}
-      <button onClick={handleGrade} style={{ padding: '0.3rem 1rem', cursor: 'pointer', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '4px' }}>
+      <button
+        onClick={handleGrade}
+        className="mt-3 rounded bg-purple-600 px-3 py-1.5 text-sm font-semibold text-white transition hover:bg-purple-700 dark:bg-purple-500 dark:hover:bg-purple-600"
+      >
         Grade Submission
       </button>
     </div>

@@ -2,10 +2,13 @@ import type { Course } from "../types/index";
 
 interface CourseCardProps {
   course: Course;
+  variant?: "default" | "compact";
   onEnroll?: (course: Course) => void;
 }
 
-function CourseCard({ course, onEnroll }: CourseCardProps) {
+function CourseCard({ course, variant = "default", onEnroll }: CourseCardProps) {
+  const isCompact = variant === "compact";
+
   const handleEnroll = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     if (onEnroll) {
@@ -15,12 +18,24 @@ function CourseCard({ course, onEnroll }: CourseCardProps) {
   };
 
   return (
-    <div className="course-card" style={{ border: '1px solid #007bff', padding: '1rem', margin: '1rem 0', borderRadius: '8px' }}>
-      <h3>{course.code}</h3>
-      <p><strong>Title:</strong> {course.title}</p>
-      <p><strong>Units:</strong> {course.units}</p>
-      <p><strong>Semester:</strong> {course.semester}</p>
-      <button onClick={handleEnroll} style={{ padding: '0.3rem 1rem', cursor: 'pointer', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px' }}>
+    <div className={`m-4 rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 ${
+      isCompact ? "p-3" : "p-5"
+    }`}>
+      <h3 className={`font-bold text-gray-900 dark:text-white ${
+        isCompact ? "text-sm" : "text-lg"
+      }`}>
+        {course.code}
+      </h3>
+      {!isCompact && (
+        <p className="text-gray-600 dark:text-gray-300">{course.title}</p>
+      )}
+      <p className="text-sm text-gray-500 dark:text-gray-400">
+        {course.units} units — {course.semester}
+      </p>
+      <button
+        onClick={handleEnroll}
+        className="mt-2 rounded bg-green-600 px-3 py-1.5 text-sm font-semibold text-white transition hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600"
+      >
         Enroll
       </button>
     </div>
