@@ -1,10 +1,10 @@
-import type { Submission } from "../types/index";
+import type { ApiSubmission } from "../types/index";
 import { SubmissionStatus } from "../types/index";
 
 interface SubmissionBadgeProps {
-  submission: Submission;
+  submission: ApiSubmission;
   children?: React.ReactNode;
-  onGrade?: (submission: Submission) => void;
+  onGrade?: (submission: ApiSubmission) => void;
 }
 
 const SubmissionBadge: React.FC<SubmissionBadgeProps> = ({
