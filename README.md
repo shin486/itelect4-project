@@ -1,75 +1,57 @@
-# React + TypeScript + Vite
+# ITELECT4 Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ITELECT4 Graded Task 4 (GT4) — Fullstack MERN application frontend built with React, TypeScript, Vite, Tailwind CSS, and Shadcn UI.
 
-Currently, two official plugins are available:
+## 🔗 Live URLs
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Service | URL |
+|---------|-----|
+| **Frontend** | https://your-frontend.vercel.app |
+| **Backend API** | https://itelect4-backend-tau.vercel.app |
 
-## React Compiler
+> ⚠️ Replace `https://your-frontend.vercel.app` with your actual Vercel frontend deployment URL.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 📋 Features
 
-## Expanding the ESLint configuration
+- User registration & login with JWT authentication
+- Protected routes
+- React Hook Form + Zod validation
+- TanStack Query for server state
+- Zustand for client state
+- Tailwind CSS + Shadcn UI components
+- React Router for navigation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Framework:** React 19 + TypeScript
+- **Build Tool:** Vite
+- **Styling:** Tailwind CSS + Shadcn UI
+- **Forms:** React Hook Form + Zod
+- **State:** Zustand + TanStack Query
+- **Routing:** React Router
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🚀 Local Development
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Install dependencies
+npm install
 
+# Copy environment variables
+cp .env.example .env
+# Edit .env with your backend API URL:
+# VITE_API_URL=https://itelect4-backend-tau.vercel.app
+
+# Run development server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🌍 Deployment (Vercel)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. Connect this repo to Vercel
+2. Add environment variable:
+   - `VITE_API_URL` — `https://itelect4-backend-tau.vercel.app`
+3. Deploy
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🔗 Backend Repo
 
-```
+[ITELECT4 Backend](https://github.com/shin486/itelect4-backend)
