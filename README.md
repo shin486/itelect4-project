@@ -6,10 +6,10 @@ ITELECT4 Graded Task 4 (GT4) — Fullstack MERN application frontend built with 
 
 | Service | URL |
 |---------|-----|
-| **Frontend** | https://your-frontend.vercel.app |
+| **Frontend** | https://itelect4-project-nine.vercel.app |
 | **Backend API** | https://itelect4-backend-tau.vercel.app |
 
-> ⚠️ Replace `https://your-frontend.vercel.app` with your actual Vercel frontend deployment URL.
+
 
 ## 📋 Features
 
