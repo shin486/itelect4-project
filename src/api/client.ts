@@ -1,4 +1,10 @@
 import type { Course, ApiSubmission, NewSubmission, AiReview } from "../types/index";
+import useAuthStore from "../store/authStore";
+
+function authHeaders(): Record<string, string> {
+  const token = useAuthStore.getState().token;
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
 
 export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
 
