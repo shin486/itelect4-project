@@ -1,72 +1,95 @@
 import type { Course, ApiSubmission, NewSubmission, AiReview } from "../types/index";
 
-export const API_URL = "http://localhost:3001";
+export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
 
-// GET /courses -> the whole list
-export async function fetchCourses(): Promise<Course[]> {
-  const res = await fetch(`${API_URL}/courses`);
+// Reusable request helper that automatically attaches auth headers and handles errors
+export async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
+  const url = path.startsWith("http") ? path : `${API_URL}${path}`;
+  const res = await fetch(url, {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...authHeaders(),
+      ...(options.headers || {}),
+    },
+  });
+
   if (!res.ok) {
-    throw new Error("Could not load courses");
+    let message = "Request failed";
+    try {
+      const err = await res.json();
+      message = err.message || message;
+    } catch {
+      // ignore non-json error
+    }
+    throw new Error(message);
   }
+
+  if (res.status === 204) {
+    return {} as T;
+  }
+
   return res.json();
 }
 
-// GET /courses?code=ITELECT4 -> an ARRAY of matches, not one course
-export async function fetchCourseByCode(code: string): Promise<Course> {
-  const res = await fetch(`${API_URL}/courses?code=${code}`);
-  if (!res.ok) {
-    throw new Error("Could not load that course");
+// GET /api/courses -> the whole list
+export async function fetchCourses(): Promise<Course[]> {
+  try {
+    return await request<Course[]>("/api/courses");
+  } catch {
+    return await request<Course[]>("/courses");
   }
-  const matches: Course[] = await res.json();
-  if (matches.length === 0) {
+}
+
+// GET /api/courses?code=ITELECT4
+export async function fetchCourseByCode(code: string): Promise<Course> {
+  let matches: Course[];
+  try {
+    matches = await request<Course[]>(`/api/courses?code=${code}`);
+  } catch {
+    matches = await request<Course[]>(`/courses?code=${code}`);
+  }
+  if (!matches || matches.length === 0) {
     throw new Error(`No course found with code "${code}".`);
   }
   return matches[0];
 }
 
-// GET /submissions
+// GET /api/submissions
 export async function fetchSubmissions(): Promise<ApiSubmission[]> {
-  const res = await fetch(`${API_URL}/submissions`);
-  if (!res.ok) {
-    throw new Error("Could not load submissions");
+  try {
+    const res = await request<{ data: ApiSubmission[] } | ApiSubmission[]>("/api/submissions");
+    return Array.isArray(res) ? res : res.data;
+  } catch {
+    return await request<ApiSubmission[]>("/submissions");
   }
-  return res.json();
 }
 
-// POST /submissions -> the row the server saved, with the id it made
+// POST /api/submissions
 export async function createSubmission(
   newSubmission: NewSubmission
 ): Promise<ApiSubmission> {
-  const res = await fetch(`${API_URL}/submissions`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(newSubmission),
-  });
-  if (!res.ok) {
-    throw new Error("Could not save the submission");
+  try {
+    const res = await request<{ data: ApiSubmission } | ApiSubmission>("/api/submissions", {
+      method: "POST",
+      body: JSON.stringify(newSubmission),
+    });
+    return (res as { data: ApiSubmission }).data || (res as ApiSubmission);
+  } catch {
+    return await request<ApiSubmission>("/submissions", {
+      method: "POST",
+      body: JSON.stringify(newSubmission),
+    });
   }
-  return res.json();
 }
 
-
-// POST /api/ai/review -> asks Gemini (via the backend) to review a submission
-// prompt and returns the structured AiReview.
-export async function askAi(prompt: string): Promise<AiReview> {
-  const res = await fetch(`${API_URL}/api/ai/review`, {
+// ===== SESSION 11: POST /api/ai ========================================
+// Private, like submissions. The token goes on automatically via request(),
+// which matters more here than anywhere: without it, anyone could
+// spend your Gemini quota.
+export function askAi(prompt: string): Promise<AiReview> {
+  return request<AiReview>("/api/ai", {
     method: "POST",
-    headers: authHeaders(),
     body: JSON.stringify({ prompt }),
   });
-  if (!res.ok) {
-    let message = "Could not get AI review.";
-    try {
-      const err = await res.json();
-      message = err.message || message;
-    } catch {
-      // ignore malformed error bodies
-    }
-    throw new Error(message);
-  }
-  const json = await res.json();
-  return json.data;
 }
