@@ -1,4 +1,5 @@
 import type { Course, ApiSubmission, NewSubmission, AiReview } from "../types/index";
+import { authHeaders } from "../lib/auth";
 
 export const API_URL = "http://localhost:3001";
 
