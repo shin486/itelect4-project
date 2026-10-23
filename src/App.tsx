@@ -5,7 +5,7 @@ import DashboardPage from "./pages/DashboardPage";
 import CoursesPage from "./pages/CoursesPage";
 import CourseDetailPage from "./pages/CourseDetailPage";
 import LoginPage from "./pages/LoginPage";
-import SubmissionsPage from "./pages/SubmissionsPage";
+import SubmissionsPage from "./pages/SubmissionsPage";`nimport ReviewPage from "./pages/ReviewPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
         <Route path="courses/:code" element={<CourseDetailPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route element={<ProtectedRoute />}>
-          <Route path="submissions" element={<SubmissionsPage />} />
+          <Route path="submissions" element={<SubmissionsPage />} />`n          <Route path="review" element={<ReviewPage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Route>
