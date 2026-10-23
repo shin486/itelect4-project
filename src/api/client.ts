@@ -1,4 +1,4 @@
-import type { Course, ApiSubmission, NewSubmission } from "../types/index";
+import type { Course, ApiSubmission, NewSubmission, AiReview } from "../types/index";
 
 export const API_URL = "http://localhost:3001";
 
@@ -46,4 +46,27 @@ export async function createSubmission(
     throw new Error("Could not save the submission");
   }
   return res.json();
+}
+
+
+// POST /api/ai/review -> asks Gemini (via the backend) to review a submission
+// prompt and returns the structured AiReview.
+export async function askAi(prompt: string): Promise<AiReview> {
+  const res = await fetch(`${API_URL}/api/ai/review`, {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify({ prompt }),
+  });
+  if (!res.ok) {
+    let message = "Could not get AI review.";
+    try {
+      const err = await res.json();
+      message = err.message || message;
+    } catch {
+      // ignore malformed error bodies
+    }
+    throw new Error(message);
+  }
+  const json = await res.json();
+  return json.data;
 }

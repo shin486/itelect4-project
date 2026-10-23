@@ -6,6 +6,7 @@ import CoursesPage from "./pages/CoursesPage";
 import CourseDetailPage from "./pages/CourseDetailPage";
 import LoginPage from "./pages/LoginPage";
 import SubmissionsPage from "./pages/SubmissionsPage";
+import ReviewPage from "./pages/ReviewPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="login" element={<LoginPage />} />
         <Route element={<ProtectedRoute />}>
           <Route path="submissions" element={<SubmissionsPage />} />
+          <Route path="review" element={<ReviewPage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Route>

@@ -128,3 +128,12 @@ export type ApiSubmission = Omit<Submission, "id" | "submittedAt"> & {
 
 // What we SEND when creating one. No id yet -- the server makes it.
 export type NewSubmission = Omit<ApiSubmission, "id">;
+
+
+
+export interface AiReview {
+  summary: string;
+  strengths: string[];
+  improvements: string[];
+  readiness: "ready" | "almost" | "not-yet";
+}
