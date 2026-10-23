@@ -1,4 +1,9 @@
-import type { User, Course, Submission } from "../types/index";
+// allCourses and allSubmissions are DELETED. They live in db.json now,
+// and the app fetches them instead of importing them.
+//
+// `student` stays. There is no /users endpoint and no real login until
+// Module 4 -- the Dashboard's user is still hard-coded, on purpose.
+import type { User } from "../types/index";
 
 export const student: User = {
   id: 1,
@@ -7,42 +12,3 @@ export const student: User = {
   role: "student",
   isActive: true,
 };
-
-export const allCourses: Course[] = [
-  {
-    code: "ITELECT4",
-    title: "IT Elective 4 - TypeScript Advanced Types",
-    units: 3,
-    semester: "1st Semester 2026-2027",
-  },
-  {
-    code: "ITELECT3",
-    title: "IT Elective 3 - Web Development",
-    units: 3,
-    semester: "2nd Semester 2025-2026",
-  },
-  {
-    code: "CSSWENG",
-    title: "Software Engineering",
-    units: 3,
-    semester: "1st Semester 2026-2027",
-  },
-];
-
-export const allSubmissions: Submission[] = [
-  {
-    id: 1,
-    studentId: 1,
-    courseCode: "ITELECT4",
-    repoUrl: "github.com/juan/itelect4-project",
-    submittedAt: new Date(),
-    score: 95,
-  },
-  {
-    id: 2,
-    studentId: 1,
-    courseCode: "ITELECT3",
-    repoUrl: "github.com/juan/itelect3-final",
-    submittedAt: new Date(),
-  },
-];
